@@ -1,16 +1,19 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import logoImage from './controller.png'; // Placeholder
 
 const Header = () => {
   return (
-    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
-      <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <Link className="text-light" to="/">
-          <h1 className="m-0">Tech Thoughts</h1>
-        </Link>
-        <p className="m-0">Get into the mind of a programmer.</p>
+    <header className="header is-shadow">
+      <div className="navbar-brand">
+        <img src={logoImage} alt="logo" />
+        <a href="index.html" className="logo navbar-item has-text-weight-bold is-size-3">IGR</a>
+        <div className="btns navbar-end">
+          <button id="login-btn" className="btn has-text-weight-bold">Login</button>
+          <button id="sign-btn" className="btn has-text-weight-bold">Sign Up</button>
+        </div>
       </div>
     </header>
   );
-};
+}
 
 export default Header;
