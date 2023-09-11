@@ -1,5 +1,7 @@
 import React from 'react';
 import logoImage from './controller.png'; // Placeholder
+import LoginModal from './LoginModal';
+import SignUpModal from './SignUpModal';
 
 const Header = () => {
   return (
@@ -8,8 +10,8 @@ const Header = () => {
         <img src={logoImage} alt="logo" />
         <a href="index.html" className="logo navbar-item has-text-weight-bold is-size-3">IGR</a>
         <div className="btns navbar-end">
-          <button id="login-btn" className="btn has-text-weight-bold">Login</button>
-          <button id="sign-btn" className="btn has-text-weight-bold">Sign Up</button>
+        <LoginModal />
+        <SignUpModal />
         </div>
       </div>
     </header>
