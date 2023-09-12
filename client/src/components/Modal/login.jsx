@@ -30,7 +30,7 @@ const LoginModal = () => {
             <p className="username">Username</p>
             <input className="input" type="text" placeholder="Username" />
             <p className="password">Password</p>
-            <input className="input" type="text" placeholder="Password" />
+            <input className="input" type="password" placeholder="Password" />
             <button>Login</button>
             </form>
 
