@@ -1,30 +1,32 @@
 import { gql } from '@apollo/client';
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!, $thoughtAuthor: String!) {
-    addThought(thoughtText: $thoughtText, thoughtAuthor: $thoughtAuthor) {
+export const ADD_REVIEW = gql`
+  mutation addReview($reviewText: String!, $reviewAuthor: String!) {
+    addReview(reviewText: $reviewText, reviewAuthor: $reviewAuthor) {
       _id
-      thoughtText
-      thoughtAuthor
+      reviewText
+      reviewAuthor
       createdAt
       comments {
         _id
         commentText
+        commentAuthor
       }
     }
   }
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+  mutation addComment($reviewId: ID!, $commentText: String!) {
+    addComment(reviewId: $reviewId, commentText: $commentText) {
       _id
-      thoughtText
-      thoughtAuthor
+      reviewText
+      reviewAuthor
       createdAt
       comments {
         _id
         commentText
+        commentAuthor
         createdAt
       }
     }

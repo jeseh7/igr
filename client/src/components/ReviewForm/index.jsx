@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { ADD_THOUGHT } from '../../utils/mutations';
-import { QUERY_THOUGHTS } from '../../utils/queries';
+import { ADD_REVIEW } from '../../utils/mutations';
+import { QUERY_REVIEWS } from '../../utils/queries';
 
-const ThoughtForm = () => {
+const ReviewForm = () => {
   const [formState, setFormState] = useState({
-    thoughtText: '',
-    thoughtAuthor: '',
+    reviewText: '',
+    reviewAuthor: '',
   });
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addThought, { error }] = useMutation(ADD_THOUGHT, {
+  const [addReview, { error }] = useMutation(ADD_REVIEW, {
     refetchQueries: [
-      QUERY_THOUGHTS,
-      'getThoughts'
+      QUERY_REVIEWS,
+      'getReviews'
     ]
   });
 
@@ -22,13 +22,13 @@ const ThoughtForm = () => {
     event.preventDefault();
 
     try {
-      const { data } = await addThought({
+      const { data } = await addReview({
         variables: { ...formState },
       });
 
       setFormState({
-        thoughtText: '',
-        thoughtAuthor: '',
+        reviewText: '',
+        reviewAuthor: '',
       });
     } catch (err) {
       console.error(err);
@@ -38,17 +38,17 @@ const ThoughtForm = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'thoughtText' && value.length <= 280) {
+    if (name === 'reviewText' && value.length <= 280) {
       setFormState({ ...formState, [name]: value });
       setCharacterCount(value.length);
-    } else if (name !== 'thoughtText') {
+    } else if (name !== 'reviewText') {
       setFormState({ ...formState, [name]: value });
     }
   };
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3>What's up Gamer?</h3>
 
       <p
         className={`m-0 ${
@@ -64,9 +64,9 @@ const ThoughtForm = () => {
       >
         <div className="col-12">
           <textarea
-            name="thoughtText"
-            placeholder="Here's a new thought..."
-            value={formState.thoughtText}
+            name="reviewText"
+            placeholder="Here's a new review..."
+            value={formState.reviewText}
             className="form-input w-100"
             style={{ lineHeight: '1.5' }}
             onChange={handleChange}
@@ -74,9 +74,9 @@ const ThoughtForm = () => {
         </div>
         <div className="col-12 col-lg-9">
           <input
-            name="thoughtAuthor"
-            placeholder="Add your name to get credit for the thought..."
-            value={formState.thoughtAuthor}
+            name="reviewAuthor"
+            placeholder="Add your name to get credit for the review..."
+            value={formState.reviewAuthor}
             className="form-input w-100"
             onChange={handleChange}
           />
@@ -84,7 +84,7 @@ const ThoughtForm = () => {
 
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            Add Thought
+            Add Review
           </button>
         </div>
         {error && (
@@ -97,4 +97,4 @@ const ThoughtForm = () => {
   );
 };
 
-export default ThoughtForm;
+export default ReviewForm;
