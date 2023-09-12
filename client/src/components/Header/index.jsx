@@ -8,7 +8,7 @@ const Header = () => {
     <header className="header is-shadow">
       <div className="navbar-brand">
         <img src={logoImage} alt="logo" />
-        <a href="index.html" className="logo navbar-item has-text-weight-bold is-size-3">IGR</a>
+        <Link to="/" className="logo navbar-item has-text-weight-bold is-size-3">IGR</Link>
         <div className="btns navbar-end">
         <LoginModal />
         <SignUpModal />
