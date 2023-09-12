@@ -2,13 +2,23 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { ADD_COMMENT } from '../../utils/mutations';
+import { QUERY_SINGLE_REVIEW } from '../../utils/queries';
 
-const CommentForm = ({ thoughtId }) => {
-  const [commentText, setCommentText] = useState('');
+const CommentForm = () => {
+  const [commentState, setCommentState] = useState({
+    reviewId:'',
+    commentAuthor:'',
+    commentText:'',
+  });
   const [characterCount, setCharacterCount] = useState(0);
 
   // The useMutation hook returns an array, which includes our addComment function
-  const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const [addComment, { error }] = useMutation(ADD_COMMENT, {
+    refetchQueries: [
+      QUERY_SINGLE_REVIEW,
+      'getSingleReview'
+    ]
+  });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -16,12 +26,13 @@ const CommentForm = ({ thoughtId }) => {
     try {
       // We call the addComment function when the comment form submits, and give the variables argument needed to complete the query
       const { data } = await addComment({
-        variables: { 
-          thoughtId, commentText 
-        }
+        variables: { ...commentState },
       });
 
-      setCommentText('');
+      setCommentState({
+        commentText: '',
+        commentAuthor: '',
+      });
     } catch (err) {
       console.error(err);
     }
@@ -31,14 +42,16 @@ const CommentForm = ({ thoughtId }) => {
     const { name, value } = event.target;
 
     if (name === 'commentText' && value.length <= 280) {
-      setCommentText(value);
+      setCommentState({ ...commentState, [name]: value });
       setCharacterCount(value.length);
+    } else if (name !== 'commentText') {
+      setCommentState({ ...commentState, [name]: value });
     }
   };
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>What are your thoughts on this review?</h4>
       <p
         className={`m-0 ${
           characterCount === 280 || error ? 'text-danger' : ''
@@ -61,12 +74,25 @@ const CommentForm = ({ thoughtId }) => {
             onChange={handleChange}
           ></textarea>
         </div>
-
+        <div className="col-12 col-lg-9">
+          <input
+            name="commentAuthor"
+            placeholder="Add your name to get credit for the review..."
+            value={commentState.commentAuthor}
+            className="form-input w-100"
+            onChange={handleChange}
+          />
+        </div>
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
             Add Comment
           </button>
         </div>
+        {error && (
+          <div className="col-12 my-3 bg-danger text-white p-3">
+            Something went wrong...
+          </div>
+        )}
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 
-import reviewList from '../components/ReviewList';
-import reviewForm from '../components/ReviewForm';
+import ReviewList from '../components/ReviewList';
+import ReviewForm from '../components/ReviewForm';
 
 import { QUERY_REVIEWS } from '../utils/queries';
 
@@ -16,13 +16,13 @@ const Home = () => {
           className="col-12 col-md-10 mb-3 p-3"
           style={{ border: '1px dotted #1a1a1a' }}
         >
-          <reviewForm />
+          <ReviewForm />
         </div>
         <div className="col-12 col-md-8 mb-3">
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <reviewList
+            <ReviewList
               reviews={reviews}
               title="Recent Reviews"
             />

@@ -10,6 +10,7 @@ export const ADD_REVIEW = gql`
       comments {
         _id
         commentText
+        commentAuthor
       }
     }
   }
@@ -25,6 +26,7 @@ export const ADD_COMMENT = gql`
       comments {
         _id
         commentText
+        commentAuthor
         createdAt
       }
     }

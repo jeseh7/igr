@@ -21,6 +21,7 @@ export const QUERY_SINGLE_REVIEW = gql`
       comments {
         _id
         commentText
+        commentAuthor
         createdAt
       }
     }

@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_REVIEW } from '../../utils/mutations';
 import { QUERY_REVIEWS } from '../../utils/queries';
 
-const reviewForm = () => {
+const ReviewForm = () => {
   const [formState, setFormState] = useState({
     reviewText: '',
     reviewAuthor: '',
