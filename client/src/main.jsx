@@ -1,9 +1,10 @@
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import 'bulma/css/bulma.min.css';
 
 import App from './App.jsx'
 import Home from './pages/Home'
-import SingleThought from './pages/SingleThought'
+import SingleReview from './pages/SingleReview'
 import Error from './pages/Error'
 
 const router = createBrowserRouter([
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/thoughts/:thoughtId',
-        element: <SingleThought />,
+        element: <SingleReview />,
       },
     ],
   },

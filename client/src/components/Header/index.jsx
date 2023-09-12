@@ -1,13 +1,14 @@
 import React from 'react';
-import logoImage from './controller.png'; // Placeholder
-import LoginModal from './LoginModal';
-import SignUpModal from './SignUpModal';
+import { Link } from 'react-router-dom';
+//import logoImage from './controller.png';//
+import LoginModal from './login';
+import SignUpModal from './sign-up';
 
 const Header = () => {
   return (
     <header className="header is-shadow">
       <div className="navbar-brand">
-        <img src={logoImage} alt="logo" />
+        {/*<img src={logoImage} alt="logo" />*/}
         <Link to="/" className="logo navbar-item has-text-weight-bold is-size-3">IGR</Link>
         <div className="btns navbar-end">
         <LoginModal />
