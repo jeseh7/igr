@@ -7,7 +7,7 @@ const gameSchema = new Schema({
   },
   genres: {
     type: [String],
-    required: true,
+    required: false,
   },
   name: {
     type: String,
@@ -15,19 +15,19 @@ const gameSchema = new Schema({
   },
   platforms: {
     type: [String],
-    required: true,
+    required: false,
   },
   summary: {
     type: String,
-    required: true,
+    required: false,
   },
   url: {
     type: String,
-    required: true,
+    required: false,
   },
   storyline: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
