@@ -4,7 +4,7 @@ import 'bulma/css/bulma.min.css';
 
 import App from './App.jsx'
 import Home from './pages/Home'
-import SingleReview from './pages/SingleReview'
+import Profile from './pages/Profile'
 import Error from './pages/Error'
 
 const router = createBrowserRouter([
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/thoughts/:thoughtId',
-        element: <SingleReview />,
+        path: '/profile/:profileId',
+        element: <Profile />,
       },
     ],
   },
