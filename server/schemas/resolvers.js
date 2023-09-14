@@ -9,19 +9,20 @@ const resolvers = {
       }
       throw AuthenticationError;
       },
-      users: async () => {
-        return User.find().populate("reviews");
-      },
-      user: async (parent, { username }) => {
-        return User.findOne({ username }).populate("reviews");
-      },
-      reviews: async () => {
-        return Review.find().sort({ createdAt: -1 });
-      },
-      review: async (parent, { reviewId }) => {
-        return Review.findOne({ _id: reviewId });
-      },
+    users: async () => {
+      return User.find().populate("reviews");
     },
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate("reviews");
+    },
+    reviews: async () => {
+      return Review.find().sort({ createdAt: -1 });
+    },
+
+    review: async (parent, { reviewId }) => {
+      return Review.findOne({ _id: reviewId });
+    },
+  },
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
