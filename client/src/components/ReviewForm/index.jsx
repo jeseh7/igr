@@ -20,7 +20,7 @@ const ReviewForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(data);
     try {
       const { data } = await addReview({
         variables: { ...formState },
@@ -37,7 +37,6 @@ const ReviewForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     if (name === 'reviewText' && value.length <= 280) {
       setFormState({ ...formState, [name]: value });
       setCharacterCount(value.length);
