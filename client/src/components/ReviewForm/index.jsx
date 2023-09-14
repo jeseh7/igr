@@ -25,7 +25,7 @@ const ReviewForm = ({ profileId, setRefetchReviews }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(data);
     try {
       const { data } = await addReview({
         variables: { ...formState, profileId }, // Include profileId in variables
@@ -42,7 +42,6 @@ const ReviewForm = ({ profileId, setRefetchReviews }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     if (name === 'reviewText' && value.length <= 280) {
       setFormState({ ...formState, [name]: value });
       setCharacterCount(value.length);

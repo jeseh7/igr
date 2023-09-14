@@ -1,5 +1,5 @@
-const Comment = require('./Comment');
+const Review = require('./Review');
 const Game = require('./Game');
 const User = require('./User');
 
-module.exports = { Comment, User, Game };
+module.exports = { Review, User, Game };
