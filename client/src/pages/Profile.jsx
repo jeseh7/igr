@@ -1,5 +1,7 @@
-import { Navigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import ReviewList from '../components/ReviewList';
 import ReviewForm from '../components/ReviewForm';
@@ -9,43 +11,47 @@ import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
-  // const { profileId } = useParams();
+  const { profileId } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  // If there is no `profileId` in the URL as a parameter, execute the `QUERY_ME` query instead for the logged in user's information
-  const { loading, data } = useQuery( QUERY_ME, {
-    variables: { username: Auth.getProfile().authenticatedPerson.username },
-  })
-  // Check if data is returning from the `QUERY_ME` query, then the `QUERY_SINGLE_PROFILE` query
-  const profile = data?.me || data?.profile || {};
+  // Use the QUERY_ME query to get the logged-in user's data
+  const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
 
-  // Use React Router's `<Redirect />` component to redirect to personal profile page if username is yours
-  // if (Auth.loggedIn() && Auth.getProfile().data._id === profileId) {
-  //   return <Navigate to="/me" />;
-  // }
+  // Use the QUERY_SINGLE_PROFILE query to get the profile data if profileId is available
+  const { loading: profileLoading, data: profileData } = useQuery(
+    QUERY_SINGLE_PROFILE,
+    {
+      variables: { profileId },
+    }
+  );
 
-  if (loading) {
+  // Determine which data to use based on whether a profileId is available
+  const userData = profileId ? profileData : meData;
+  const isLoading = profileId ? profileLoading : meLoading;
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // if (!profile?.name) {
-  //   return (
-  //     <h4>
-  //       You need to be logged in to see your profile page. Use the navigation
-  //       links above to sign up or log in!
-  //     </h4>
-  //   );
-  // }
+  const profile = userData?.profile || userData?.me || {};
+
+  // Check if the user is authenticated
+  if (!Auth.loggedIn()) {
+    // If not authenticated, navigate to the login page
+    navigate('/login');
+    return null; // Return null to prevent rendering the profile content
+  }
 
   return (
     <div>
       <h2 className="card-header">
-        {profileId ? `${profile.name}'s` : 'Your'} Reviews!
+        {profileId ? `${profile.username}'s` : 'Your'} Reviews!
       </h2>
 
       {profile.reviews?.length > 0 && (
         <ReviewList
           reviews={profile.reviews}
-          isLoggedInUser={!profileId && true}
+          isLoggedInUser={!profileId}
         />
       )}
 
