@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_REVIEW } from '../../utils/mutations';
 import { QUERY_REVIEWS } from '../../utils/queries';
 
-const ReviewForm = () => {
+const ReviewForm = ({ profileId, setRefetchReviews }) => {
   const [formState, setFormState] = useState({
     reviewText: '',
     reviewAuthor: '',
@@ -13,9 +13,14 @@ const ReviewForm = () => {
 
   const [addReview, { error }] = useMutation(ADD_REVIEW, {
     refetchQueries: [
-      QUERY_REVIEWS,
-      'getReviews'
-    ]
+      {
+        query: QUERY_REVIEWS, // Refetch the reviews query after adding a review
+      },
+    ],
+    onCompleted: () => {
+      // After successfully adding a review, setRefetchReviews to true to trigger ReviewList refetch
+      setRefetchReviews(true);
+    },
   });
 
   const handleFormSubmit = async (event) => {
@@ -23,7 +28,7 @@ const ReviewForm = () => {
 
     try {
       const { data } = await addReview({
-        variables: { ...formState },
+        variables: { ...formState, profileId }, // Include profileId in variables
       });
 
       setFormState({

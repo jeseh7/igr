@@ -1,10 +1,17 @@
 // Import `<Link>` component from React Router for internal hyperlinks
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react'; // Import useEffect
 
 const ReviewList = ({ reviews, title }) => {
   if (!reviews.length) {
     return <h3>No Reviews Yet</h3>;
   }
+  useEffect(() => {
+    if (refetchReviews) {
+      // Check if refetchReviews is true, and if so, refetch the reviews
+      refetch();
+    }
+  }, [refetchReviews, refetch]);
 
   return (
     <div>
