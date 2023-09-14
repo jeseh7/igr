@@ -1,27 +1,27 @@
 const { User } = require("../models");
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("thoughts");
+        return User.findOne({ _id: context.user._id }).populate("reviews");
       }
       throw AuthenticationError;
     },
     users: async () => {
-      return User.find().populate("thoughts");
+      return User.find().populate("reviews");
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("thoughts");
+      return User.findOne({ username }).populate("reviews");
     },
-    // thoughts: async () => {
-    //   return Thought.find().sort({ createdAt: -1 });
-    // },
+    reviews: async () => {
+      return Review.find().sort({ createdAt: -1 });
+    },
 
-    // thought: async (parent, { thoughtId }) => {
-    //   return Thought.findOne({ _id: thoughtId });
-    // },
+    review: async (parent, { reviewId }) => {
+      return Review.findOne({ _id: reviewId });
+    },
   },
 
   Mutation: {
@@ -47,31 +47,31 @@ const resolvers = {
 
       return { token, user };
     },
-    // addThought: async (parent, { thoughtText, thoughtAuthor }) => {
-    //   return Thought.create({ thoughtText, thoughtAuthor });
-    // },
-    // addComment: async (parent, { thoughtId, commentText }) => {
-    //   return Thought.findOneAndUpdate(
-    //     { _id: thoughtId },
-    //     {
-    //       $addToSet: { comments: { commentText } },
-    //     },
-    //     {
-    //       new: true,
-    //       runValidators: true,
-    //     }
-    //   );
-    // },
-    // removeThought: async (parent, { thoughtId }) => {
-    //   return Thought.findOneAndDelete({ _id: thoughtId });
-    // },
-    // removeComment: async (parent, { thoughtId, commentId }) => {
-    //   return Thought.findOneAndUpdate(
-    //     { _id: thoughtId },
-    //     { $pull: { comments: { _id: commentId } } },
-    //     { new: true }
-    //   );
-    // },
+    addReview: async (parent, { reviewText, reviewAuthor }) => {
+      return Review.create({ reviewText, reviewAuthor });
+    },
+    addComment: async (parent, { reviewId, commentText }) => {
+      return Review.findOneAndUpdate(
+        { _id: reviewId },
+        {
+          $addToSet: { comments: { commentText } },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+    },
+    removeReview: async (parent, { reviewId }) => {
+      return Review.findOneAndDelete({ _id: reviewId });
+    },
+    removeComment: async (parent, { reviewId, commentId }) => {
+      return Review.findOneAndUpdate(
+        { _id: reviewId },
+        { $pull: { comments: { _id: commentId } } },
+        { new: true }
+      );
+    },
   },
 };
 

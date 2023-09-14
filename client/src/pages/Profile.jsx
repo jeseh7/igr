@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 import ReviewList from '../components/ReviewList';
 import ReviewForm from '../components/ReviewForm';
 
-import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
+import { QUERY_SINGLE_PROFILE, QUERY_ME, QUERY_REVIEWS } from '../utils/queries'; // Import QUERY_REVIEWS
 
 import Auth from '../utils/auth';
 
 const Profile = () => {
   const { profileId } = useParams();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [refetchReviews, setRefetchReviews] = useState(false); // State to trigger review list refetch
 
-  // Use the QUERY_ME query to get the logged-in user's data
   const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
 
-  // Use the QUERY_SINGLE_PROFILE query to get the profile data if profileId is available
-  const { loading: profileLoading, data: profileData } = useQuery(
+  const { loading: profileLoading, data: profileData, refetch } = useQuery( // Add refetch function
     QUERY_SINGLE_PROFILE,
     {
       variables: { profileId },
     }
   );
 
-  // Determine which data to use based on whether a profileId is available
   const userData = profileId ? profileData : meData;
   const isLoading = profileId ? profileLoading : meLoading;
 
@@ -35,11 +33,9 @@ const Profile = () => {
 
   const profile = userData?.profile || userData?.me || {};
 
-  // Check if the user is authenticated
   if (!Auth.loggedIn()) {
-    // If not authenticated, navigate to the login page
     navigate('/login');
-    return null; // Return null to prevent rendering the profile content
+    return null;
   }
 
   return (
@@ -52,11 +48,15 @@ const Profile = () => {
         <ReviewList
           reviews={profile.reviews}
           isLoggedInUser={!profileId}
+          refetchReviews={refetchReviews} // Pass refetchReviews as a prop to ReviewList
         />
       )}
 
       <div className="my-4 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <ReviewForm profileId={profile._id} />
+        <ReviewForm
+          profileId={profile._id}
+          setRefetchReviews={setRefetchReviews} // Pass setRefetchReviews as a prop to ReviewForm
+        />
       </div>
     </div>
   );

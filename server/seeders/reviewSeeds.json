@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "reviewText": "this is a review",
+        "reviewAuthor": "guyman"
+    },
+    {
+        "id": 1,
+        "reviewText": "this is also a review",
+        "reviewAuthor": "guyman2"
+    }
+]
