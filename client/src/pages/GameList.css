@@ -1,0 +1,104 @@
+/* GameList.css */
+.game-list {
+    font-family: 'Poppins', sans-serif; /* Use the imported font */
+    padding: 20px;
+  }
+
+  
+  
+  /* Import Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Ysabeau+Infant&display=swap');
+  
+  /* Create a flex container for the grid */
+  .game-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  /* Define the style for each game item */
+  .game-item {
+    flex: 0 0 calc(33.33% - 20px);
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px; /* Add rounded edges */
+    transition: box-shadow 0.3s ease; /* Add transition for hover effect */
+  }
+  
+  /* Apply hover effect */
+  .game-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+  
+  .game-item img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+/* Center the "Games List" and search bar, increase their size, and make them bold */
+.game-list {
+    text-align: center;
+    font-size: 26px;
+     /* Make it bold */
+  }
+
+  
+  .search-bar {
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 20px; /* Increase border-radius for more rounded corners */
+  }
+  
+  
+  /* Center the rating and names of each game */
+  .game-item {
+    text-align: center;
+  }
+  
+  /* Make the title of each game bold */
+  .game-item h2 {
+    font-weight: bold; /* Make it bold */
+  }
+  
+  /* Add hover effect with box shadow */
+  .game-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add rounded edges to game items */
+  .game-item {
+    border-radius: 10px;
+  }
+  
+  /* Additional styling for buttons, make them bold and rounded */
+  button {
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 16px;
+     /* Make buttons bold */
+    border-radius: 10px; /* Round out the buttons */
+  }
+  
+  /* Style the Previous and Next buttons specifically */
+  button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  /* Add hover effect to buttons */
+  button:hover {
+    background-color: #333; /* Change the background color on hover */
+    color: white; /* Change the text color on hover */
+  }
+
+.games-sanction {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 500; /* Make it bold */
+}
+
+body {
+    background-color: #e1e1e1;
+  }
