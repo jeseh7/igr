@@ -25,12 +25,11 @@ const ReviewForm = ({ profileId, setRefetchReviews }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(data);
+    
     try {
       const { data } = await addReview({
         variables: { ...formState, profileId }, // Include profileId in variables
       });
-
       setFormState({
         reviewText: '',
         reviewAuthor: '',

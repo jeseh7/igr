@@ -4,7 +4,7 @@ const dateFormat = require("../utils/dateFormat");
 const reviewSchema = new Schema({
   id: {
     type: Number,
-    required: true,
+    required: false,
     minlength: 1,
     trim: true,
   },
