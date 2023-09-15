@@ -7,6 +7,7 @@ import { QUERY_REVIEWS } from '../utils/queries';
 import gameData from './gameSeeds.json'
 import React, { useState, useEffect } from 'react';
 import './GameList.css'; // Import your CSS file
+import { Link } from 'react-router-dom';
 
 const gamesPerPage = 30;
 
@@ -73,21 +74,23 @@ function GameList() {
       </div>
       <div className="game-grid">
         {searchQuery ? (
-          // Display filtered games when searchQuery is not empty
           displayedGames.map((game) => (
             <div key={game.id} className="game-item">
-              <img src={game.background_image} alt={game.name} />
-              <h2>{game.name}</h2>
-              <p>Rating: {game.rating} / {game.rating_top}</p>
+              <Link to={`/game/${game.id}`}> {/* Navigate to the single game page */}
+                <img src={game.background_image} alt={game.name} />
+                <h2>{game.name}</h2>
+                <p>Rating: {game.rating} / {game.rating_top}</p>
+              </Link>
             </div>
           ))
         ) : (
-          // Display games based on the current page
           gameData.slice(startIndex, endIndex).map((game) => (
             <div key={game.id} className="game-item">
-              <img src={game.background_image} alt={game.name} />
-              <h2>{game.name}</h2>
-              <p>Rating: {game.rating} / {game.rating_top}</p>
+              <Link to={`/game/${game.id}`}> {/* Navigate to the single game page */}
+                <img src={game.background_image} alt={game.name} />
+                <h2>{game.name}</h2>
+                <p>Rating: {game.rating} / {game.rating_top}</p>
+              </Link>
             </div>
           ))
         )}
