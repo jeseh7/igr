@@ -1,6 +1,5 @@
 const { User, Review } = require("../models");
 const { signToken, AuthenticationError } = require('../utils/auth');
-const { v4: uuidv4 } = require('uuid'); // Import uuidv4
 
 const resolvers = {
   Query: {

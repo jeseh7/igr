@@ -1,5 +1,6 @@
 const typeDefs = `
   type Review {
+    _id: ID
     reviewText: String
     reviewAuthor: String
     createdAt: String
