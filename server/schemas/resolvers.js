@@ -1,5 +1,6 @@
 const { User, Review } = require("../models");
 const { signToken, AuthenticationError } = require('../utils/auth');
+const { v4: uuidv4 } = require('uuid'); // Import uuidv4
 
 const resolvers = {
   Query: {
@@ -48,7 +49,28 @@ const resolvers = {
       return { token, user };
     },
     addReview: async (parent, { reviewText, reviewAuthor }) => {
-      return Review.create({ reviewText, reviewAuthor });
+      // Generate a unique ID for the new review
+      const reviewId = uuidv4();
+    
+      const review = new Review({ _id: reviewId, reviewText, reviewAuthor });
+    
+      try {
+        const savedReview = await review.save();
+    
+        // Add the review ID to the user's 'reviews' field
+        await User.findOneAndUpdate(
+          { username: reviewAuthor },
+          {
+            $addToSet: { reviews: reviewId },
+          }
+        );
+    
+        return savedReview;
+      } catch (error) {
+        // Handle any errors that occur during review creation
+        console.error(error);
+        throw new Error("Failed to create a review.");
+      }
     },
     addComment: async (parent, { reviewId, commentText }) => {
       return Review.findOneAndUpdate(
