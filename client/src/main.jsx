@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Error from './pages/Error'
+import SingleGame from './pages/SingleGame.jsx'
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/me',
         element: <Profile />
-      
       },
+      { index: true, element: <Home /> },
+      { path: '/me', element: <Profile /> },
+      { path: '/game/:gameId', element: <SingleGame /> }, // Add this route
     ],
   },
 ]);
