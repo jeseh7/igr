@@ -48,26 +48,68 @@ const resolvers = {
 
       return { token, user };
     },
-    addReview: async (parent, { reviewText, reviewAuthor }) => {
-      // Generate a unique ID for the new review
-      const reviewId = uuidv4();
+    // addReview: async (parent, { reviewText, reviewAuthor }) => {
+    //   // Generate a unique ID for the new review
+    //   const reviewId = uuidv4();
     
-      const review = new Review({ _id: reviewId, reviewText, reviewAuthor });
+    //   // const review = new Review({ _id: reviewId, reviewText, reviewAuthor });
+    //   const review = new Review({ reviewText, reviewAuthor });
+    
+    //   try {
+    //     const savedReview = await review.save();
+    
+    //     // Add the review ID to the user's 'reviews' field
+    //     await User.findOneAndUpdate(
+    //       { username: reviewAuthor },
+    //       {
+    //         $addToSet: { reviews: reviewId },
+    //       }
+    //     );
+    //     console.log(savedReview);
+    //     return savedReview;
+    //   } catch (error) {
+    //     // Handle any errors that occur during review creation
+    //     console.error(error);
+    //     throw new Error("Failed to create a review.");
+    //   }
+    // },
+    // addReview: async (parent, { reviewText, reviewAuthor }) => {
+    //   const reviewId = uuidv4(); // Generate a unique ID for the new review
+    //   const review = new Review({ _id: reviewId, reviewText, reviewAuthor }); // Assign the generated ID to the _id field
+    
+    //   try {
+    //     const savedReview = await review.save();
+        
+    //     await User.findOneAndUpdate(
+    //       { username: reviewAuthor },
+    //       {
+    //         $addToSet: { reviews: reviewId },
+    //       }
+    //     );
+        
+    //     console.log(savedReview);
+    //     return savedReview;
+    //   } catch (error) {
+    //     console.error(error);
+    //     throw new Error("Failed to create a review.");
+    //   }
+    // },
+    addReview: async (parent, { reviewText, reviewAuthor }) => {
+      const review = new Review({ reviewText, reviewAuthor });
     
       try {
         const savedReview = await review.save();
     
-        // Add the review ID to the user's 'reviews' field
         await User.findOneAndUpdate(
           { username: reviewAuthor },
           {
-            $addToSet: { reviews: reviewId },
+            $addToSet: { reviews: savedReview._id },
           }
         );
     
+        console.log(savedReview);
         return savedReview;
       } catch (error) {
-        // Handle any errors that occur during review creation
         console.error(error);
         throw new Error("Failed to create a review.");
       }
